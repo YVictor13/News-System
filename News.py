@@ -56,16 +56,53 @@ class OrmTest(object):
 
     # 查询多条数据
     def get_more(self):
-        return self.session.query(News).filter_by(title='title')
+        return self.session.query(News).filter_by(title="title")
+
+    # 修改数据
+    def update_data(self, id):
+        obj = self.session.query(News).get(id)
+        if obj:
+            obj.title = 'shdh'
+            self.session.add(obj)
+            self.session.commit()
+            return obj
+        # return False
+
+    # 修改多条数据
+    def update_data_more(self):
+        data_list = self.session.query(News).filter_by(title='title')
+        for item in data_list:
+            item.is_valid = 1
+            self.session.add(item)
+        self.session.commit()
+        return data_list
+
+    # 删除数据
+    # def delete
 
 
 def main():
     obj = OrmTest()
     # res = obj.add_all()
     # print(res)
-    res = obj.get_more()
+    # res = obj.get_more()
+    # print(res)
+    # # for item in res:
+    # #     print(item)
+    # res = obj.get_more()
+    # for item in res:
+    #     print("id:%s" % item.id, "title:%s" % item.title)
+    # 测试更新功能
+
+    # res = obj.update_data(3)
+    # print(res.title,res.id)
+
+    res = obj.update_data_more()
     for item in res:
-        print(item)
+        print(item.id,item.is_valid)
+
+    # 测试删除功能
+    # res = obj.delete_data()
 
 
 if __name__ == '__main__':

@@ -2,9 +2,9 @@ from flask import Flask
 
 app = Flask(__name__)
 
-@app.route('/hello/')
+@app.route('/index/')
 def hello_world():
-    return 'Hello World!'
+    return 'index.html'
 
 if __name__ == '__main__':
     app.run()

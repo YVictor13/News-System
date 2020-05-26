@@ -77,8 +77,27 @@ class OrmTest(object):
         self.session.commit()
         return data_list
 
-    # 删除数据
-    # def delete
+    # 删除单条数据
+    def delete_data(self, id):
+        # 获取需要删除的数据
+        obj = self.session.query(News).get(id)
+        if obj:
+            self.session.delete(obj)
+            self.session.commit()
+            return True
+        return False
+
+    # 删除多条数据
+    def delete_data_more(self, id):
+        data_list = self.session.query(News).filter(News.id > id)
+        if data_list:
+            for item in data_list:
+                if item:
+                    self.session.delete(item)
+                    self.session.commit()
+
+            return True
+        return False
 
 
 def main():
@@ -97,12 +116,12 @@ def main():
     # res = obj.update_data(3)
     # print(res.title,res.id)
 
-    res = obj.update_data_more()
-    for item in res:
-        print(item.id,item.is_valid)
+    # res = obj.update_data_more()
+    # for item in res:
+    #     print(item.id,item.is_valid)
 
     # 测试删除功能
-    # res = obj.delete_data()
+    obj.delete_data_more(3)
 
 
 if __name__ == '__main__':

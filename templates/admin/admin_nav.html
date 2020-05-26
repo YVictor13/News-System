@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='bootstrap--dist/css/bootstrap.min.css') }}">
+    {% block head %}
+        <title>首页</title>
+    {% endblock %}
+</head>
+<body>
+<!-- 导航栏 -->
+<div class="container">
+    <div class="row">
+        <div class="bs-example" data-example-id="default-navbar">
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href="/index/" class="navbar-brand active "
+                           style="color: #a721e2;font-size:14px">TheOne新闻社</a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="/index/">首页</a></li>
+                            <li><a href="{{ url_for('category',name='推荐') }}">推荐</a></li>
+                            <li><a href="{{ url_for('category',name='时政新闻') }}">时政新闻</a></li>
+                            <li><a href="{{ url_for('category',name='娱乐') }}">娱乐</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown"
+                                   role="button" aria-haspopup="true"
+                                   aria-expanded="false"  href="{{ url_for('admin_add')}}">发布</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- 新闻内容部分 -->
+            {% block content %}
+                <!-- 内容区域 -->
+            {% endblock %}
+        </div>
+        {% block extrajs %}
+            <!-- 其他脚本 -->
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>
+

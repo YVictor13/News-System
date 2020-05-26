@@ -66,16 +66,13 @@ def admin(page=None):
     '''后台新闻列表'''
     if page is None:
         page = 1
-    news_list = News.query.filter_by(is_valid=True).paginate(page=page, per_page=3)
-
+    news_list = News.query.filter_by(is_valid=True).paginate(page=page, per_page=10)
     return render_template('admin/index.html', news_list=news_list)
-
 
 @app.route('/admin/update/<int:pk>/', methods=['GET', 'POST'])
 def admin_update(pk):
     '''后台新闻列表'''
     new_obj = News.query.get(pk)
-    print('admin_update:new_obj %s' % new_obj)
     if not new_obj:
         return redirect(url_for('admin'))
 
@@ -84,6 +81,7 @@ def admin_update(pk):
         new_obj.title = form.title.data
         new_obj.content = form.content.data
         new_obj.types = form.types.data
+        new_obj.author = form.author.data
         new_obj.created_at = datetime.now()
         # 保存数据
         db.session.add(new_obj)
@@ -114,7 +112,10 @@ def admin_do_add():
             content=form.content.data,
             types=form.types.data,
             image=form.image.data,
-            created_at=datetime.now()
+            author=form.author.data,
+            created_at=datetime.now(),
+            view_count=0,
+            is_valid=True
         )
         # 保存数据
         db.session.add(new_obj)

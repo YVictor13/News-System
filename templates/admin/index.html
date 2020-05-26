@@ -2,7 +2,7 @@
 
 {% extends 'admin/admin_nav.html' %}
 {% block head %}
-    <title>TheOne新闻社</title>
+    <title>TheOne新闻社后台管理</title>
 {% endblock %}
 {% block content %}
     <!-- 消息闪现 -->
@@ -17,6 +17,7 @@
             <th>编号</th>
             <th>新闻标题</th>
             <th>类别</th>
+            <th>作者</th>
             <th>添加时间</th>
             <th>操作</th>
         </tr>
@@ -25,9 +26,10 @@
                 <td>{{ new_obj.id }}</td>
                 <td>{{ new_obj.title }}</td>
                 <td>{{ new_obj.types }}</td>
+                <td>{{ new_obj.author }}</td>
                 <td>{{ new_obj.created_at }}</td>
                 <td>
-                    <a href='/admin/update/{{ new_obj.id }}/' class='btn btn-success'>修改</a>
+                    <a href='/admin/update/{{ new_obj.id }}/' class='btn btn-info'>修改</a>
                     <a href='{{ url_for('admin_delete', pk=new_obj.id) }}'
                        class='btn btn-danger'>删除</a></td>
             </tr>
@@ -35,10 +37,8 @@
     </table>
 
     <!-- 分页，默认分页 -->
-
     <nav aria-label="Page navigation">
-        <!-- {% macro pagination_news_list(news_list, adaamin) %} -->
-            <ul class="pagination">
+        <ul class="pagination">
                 <li>
                     {% if news_list.has_prev %}
                         <a href="#" aria-label="Previous">
@@ -60,38 +60,14 @@
                         </a>
                     {% endif %}
                 </li>
+                </ul>
 
-            </ul>
-            <!-- {% endmacro %} -->
     </nav>
 
     </div>
     </div>
 {% endblock %}
-{% block extrajs %}
-    <script type="text/javascript">
-        // 通过ajax异步删除新闻
-        $(function () {
-            $('.btn-danger').on('click', function () {
-                var _this = $(this);
-                var url = _this.attr('data-url');
-                // 确认是否删除
-                if (confirm('确认删除吗？')) {
-                    // ajax调用
-                    $.post(url, function (res) {
-                        //处理结果
-                        if (res == 'yes') {
-                            _this.parents('tr').hide()
-                        } else {
-                            alert('删除失败')
-                        }
-                    })
-                }
 
-            })
-        })
-    </script>
-{% endblock %}
 </body>
 </html>
 
